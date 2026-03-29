@@ -6,7 +6,8 @@ Project initialized; requirements defined; roadmap established. Initial phase 1 
 ## Milestone 1: Core Ledger and Backend Hub
 - [x] Phase 1: Solidity Smart Contract for Product Tracking (Completed)
 - [x] Phase 2: Java/Spring Boot Backend Skeleton and MongoDB Setup (Completed)
-- [ ] Phase 3: Basic Product Registration API (Active)
+- [x] Phase 3: Basic Product Registration API (Completed)
+- [ ] Phase 4: Kafka Integration and On-Chain Event Listening (Active)
 
 ## Milestone 2: Event-Driven Synchronization
 - [ ] Phase 4: Kafka Integration and On-Chain Event Listening (Pending)

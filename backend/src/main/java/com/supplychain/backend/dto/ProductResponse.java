@@ -1,11 +1,9 @@
-package com.supplychain.backend.model;
+package com.supplychain.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
@@ -13,16 +11,14 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "products")
-public class ProductRecord {
-    @Id
+public class ProductResponse {
     private String id;
     private Long blockchainId;
     private String name;
     private String description;
-    private String metadata;
     private String status;
     private String manufacturer;
     private String currentOwner;
     private LocalDateTime lastUpdated;
+    private String metadata;
 }
