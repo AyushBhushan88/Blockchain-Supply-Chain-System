@@ -1,0 +1,15 @@
+import { ethers } from "hardhat";
+
+async function main() {
+  const SupplyChain = await ethers.getContractFactory("SupplyChain");
+  const supplyChain = await SupplyChain.deploy();
+
+  await supplyChain.waitForDeployment();
+
+  console.log(`SupplyChain contract deployed to ${await supplyChain.getAddress()}`);
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
