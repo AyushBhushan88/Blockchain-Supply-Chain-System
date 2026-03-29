@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: supply-chain-backend
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/supply_chain_db
+  main:
+    banner-mode: off
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.supplychain.backend: DEBUG
