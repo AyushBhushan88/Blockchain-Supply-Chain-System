@@ -7,11 +7,12 @@ Project initialized; requirements defined; roadmap established. Initial phase 1 
 - [x] Phase 1: Solidity Smart Contract for Product Tracking (Completed)
 - [x] Phase 2: Java/Spring Boot Backend Skeleton and MongoDB Setup (Completed)
 - [x] Phase 3: Basic Product Registration API (Completed)
-- [ ] Phase 4: Kafka Integration and On-Chain Event Listening (Active)
+- [x] Phase 4: Kafka Integration and On-Chain Event Listening (Completed)
+- [ ] Phase 5: Off-Chain Metadata Storage and Retrieval Logic (Active)
 
 ## Milestone 2: Event-Driven Synchronization
-- [ ] Phase 4: Kafka Integration and On-Chain Event Listening (Pending)
-- [ ] Phase 5: Off-Chain Metadata Storage and Retrieval Logic (Pending)
+- [x] Phase 4: Kafka Integration and On-Chain Event Listening (Completed)
+- [ ] Phase 5: Off-Chain Metadata Storage and Retrieval Logic (Active)
 
 ## Milestone 3: Real-Time Dashboards and Verification
 - [ ] Phase 6: Manufacturer and Stakeholder Dashboards (Pending)

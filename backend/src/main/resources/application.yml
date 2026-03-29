@@ -4,8 +4,25 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/supply_chain_db
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: supply-chain-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
   main:
     banner-mode: off
+
+web3j:
+  client-address: http://localhost:8545
+
+contract:
+  address: "0x5FbDB2315678afecb367f032d93F642f64180aa3" # Default Hardhat address for first contract
 
 server:
   port: 8080
