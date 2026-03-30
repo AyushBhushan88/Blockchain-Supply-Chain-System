@@ -8,16 +8,16 @@ Project initialized; requirements defined; roadmap established. Initial phase 1 
 - [x] Phase 2: Java/Spring Boot Backend Skeleton and MongoDB Setup (Completed)
 - [x] Phase 3: Basic Product Registration API (Completed)
 - [x] Phase 4: Kafka Integration and On-Chain Event Listening (Completed)
-- [ ] Phase 5: Off-Chain Metadata Storage and Retrieval Logic (Active)
+- [x] Phase 5: Off-Chain Metadata Storage and Retrieval Logic (Completed)
 
 ## Milestone 2: Event-Driven Synchronization
 - [x] Phase 4: Kafka Integration and On-Chain Event Listening (Completed)
-- [ ] Phase 5: Off-Chain Metadata Storage and Retrieval Logic (Active)
+- [x] Phase 5: Off-Chain Metadata Storage and Retrieval Logic (Completed)
 
 ## Milestone 3: Real-Time Dashboards and Verification
-- [ ] Phase 6: Manufacturer and Stakeholder Dashboards (Pending)
+- [ ] Phase 6: Manufacturer and Stakeholder Dashboards (Active)
 - [ ] Phase 7: Consumer QR Code Verification Portal (Pending)
 - [ ] Phase 8: End-to-End Integration and Testing (Pending)
 
 ---
-*Last Updated: 2026-03-29*
+*Last Updated: 2026-03-31*

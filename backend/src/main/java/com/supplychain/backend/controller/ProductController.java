@@ -1,5 +1,6 @@
 package com.supplychain.backend.controller;
 
+import com.supplychain.backend.dto.ProductHistoryResponse;
 import com.supplychain.backend.dto.ProductRequest;
 import com.supplychain.backend.dto.ProductResponse;
 import com.supplychain.backend.service.ProductService;
@@ -26,6 +27,11 @@ public class ProductController {
     @GetMapping("/{blockchainId}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable Long blockchainId) {
         return ResponseEntity.ok(productService.getProductByBlockchainId(blockchainId));
+    }
+
+    @GetMapping("/{blockchainId}/history")
+    public ResponseEntity<List<ProductHistoryResponse>> getProductHistory(@PathVariable Long blockchainId) {
+        return ResponseEntity.ok(productService.getProductHistory(blockchainId));
     }
 
     @GetMapping

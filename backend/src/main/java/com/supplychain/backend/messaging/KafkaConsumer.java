@@ -1,6 +1,8 @@
 package com.supplychain.backend.messaging;
 
+import com.supplychain.backend.model.ProductHistoryEntry;
 import com.supplychain.backend.model.ProductRecord;
+import com.supplychain.backend.repository.ProductHistoryRepository;
 import com.supplychain.backend.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 public class KafkaConsumer {
 
     private final ProductRepository productRepository;
+    private final ProductHistoryRepository productHistoryRepository;
 
     @KafkaListener(topics = "supply-chain-events", groupId = "supply-chain-group")
     public void consume(ProductEvent event) {
@@ -46,5 +49,16 @@ public class KafkaConsumer {
                 log.warn("Received status update for untracked Product ID: {}", event.getBlockchainId());
             }
         });
+
+        // Save History Entry
+        ProductHistoryEntry historyEntry = ProductHistoryEntry.builder()
+                .blockchainId(event.getBlockchainId())
+                .status(event.getStatus())
+                .actor(event.getActor())
+                .metadata(event.getMetadata())
+                .timestamp(LocalDateTime.now())
+                .build();
+        productHistoryRepository.save(historyEntry);
+        log.info("Saved history entry for Product ID: {}", event.getBlockchainId());
     }
 }

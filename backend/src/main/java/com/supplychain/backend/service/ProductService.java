@@ -1,9 +1,11 @@
 package com.supplychain.backend.service;
 
+import com.supplychain.backend.dto.ProductHistoryResponse;
 import com.supplychain.backend.dto.ProductRequest;
 import com.supplychain.backend.dto.ProductResponse;
 import com.supplychain.backend.exception.ProductNotFoundException;
 import com.supplychain.backend.model.ProductRecord;
+import com.supplychain.backend.repository.ProductHistoryRepository;
 import com.supplychain.backend.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductHistoryRepository productHistoryRepository;
 
     public ProductResponse registerProduct(ProductRequest request) {
         ProductRecord record = ProductRecord.builder()
@@ -31,23 +34,34 @@ public class ProductService {
                 .build();
 
         ProductRecord saved = productRepository.save(record);
-        return mapToResponse(saved);
+        return mapToResponse(saved, false);
     }
 
     public ProductResponse getProductByBlockchainId(Long blockchainId) {
         return productRepository.findByBlockchainId(blockchainId)
-                .map(this::mapToResponse)
+                .map(record -> mapToResponse(record, true))
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with blockchain ID: " + blockchainId));
+    }
+
+    public List<ProductHistoryResponse> getProductHistory(Long blockchainId) {
+        return productHistoryRepository.findAllByBlockchainIdOrderByTimestampDesc(blockchainId).stream()
+                .map(entry -> ProductHistoryResponse.builder()
+                        .status(entry.getStatus())
+                        .actor(entry.getActor())
+                        .metadata(entry.getMetadata())
+                        .timestamp(entry.getTimestamp())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public List<ProductResponse> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(this::mapToResponse)
+                .map(record -> mapToResponse(record, false))
                 .collect(Collectors.toList());
     }
 
-    private ProductResponse mapToResponse(ProductRecord record) {
-        return ProductResponse.builder()
+    private ProductResponse mapToResponse(ProductRecord record, boolean includeHistory) {
+        ProductResponse response = ProductResponse.builder()
                 .id(record.getId())
                 .blockchainId(record.getBlockchainId())
                 .name(record.getName())
@@ -58,5 +72,11 @@ public class ProductService {
                 .lastUpdated(record.getLastUpdated())
                 .metadata(record.getMetadata())
                 .build();
+
+        if (includeHistory) {
+            response.setHistory(getProductHistory(record.getBlockchainId()));
+        }
+
+        return response;
     }
 }

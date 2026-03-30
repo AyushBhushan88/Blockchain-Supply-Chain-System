@@ -31,8 +31,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.web3j</groupId>
-			<artifactId>web3j-spring-boot-starter</artifactId>
-			<version>4.11.3</version>
+			<artifactId>core</artifactId>
+			<version>4.9.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>

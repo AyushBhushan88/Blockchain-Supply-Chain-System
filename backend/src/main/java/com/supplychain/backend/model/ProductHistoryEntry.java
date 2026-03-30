@@ -1,26 +1,25 @@
-package com.supplychain.backend.dto;
+package com.supplychain.backend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponse {
+@Document(collection = "product_history")
+public class ProductHistoryEntry {
+    @Id
     private String id;
     private Long blockchainId;
-    private String name;
-    private String description;
     private String status;
-    private String manufacturer;
-    private String currentOwner;
-    private LocalDateTime lastUpdated;
+    private String actor;
     private String metadata;
-    private List<ProductHistoryResponse> history;
+    private LocalDateTime timestamp;
 }
