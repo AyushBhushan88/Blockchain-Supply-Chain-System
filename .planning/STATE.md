@@ -15,8 +15,8 @@ Project initialized; requirements defined; roadmap established. Initial phase 1 
 - [x] Phase 5: Off-Chain Metadata Storage and Retrieval Logic (Completed)
 
 ## Milestone 3: Real-Time Dashboards and Verification
-- [ ] Phase 6: Manufacturer and Stakeholder Dashboards (Active)
-- [ ] Phase 7: Consumer QR Code Verification Portal (Pending)
+- [x] Phase 6: Manufacturer and Stakeholder Dashboards (Completed)
+- [ ] Phase 7: Consumer QR Code Verification Portal (Active)
 - [ ] Phase 8: End-to-End Integration and Testing (Pending)
 
 ---
