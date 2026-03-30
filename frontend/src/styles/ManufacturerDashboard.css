@@ -33,7 +33,10 @@
 
 .card-header h2 {
   margin-bottom: 0;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
 }
 
 .registration-content {
@@ -75,8 +78,9 @@
   background-color: var(--background);
   border: 1px solid var(--border);
   border-radius: 8px;
-  height: 100%;
-  min-height: 300px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 250px;
   position: relative;
   overflow: hidden;
 }
@@ -179,7 +183,9 @@
 }
 
 .loading-state, .empty-state {
-  height: 300px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;

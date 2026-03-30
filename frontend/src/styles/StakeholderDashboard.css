@@ -4,6 +4,18 @@
   gap: 1.5rem;
 }
 
+@media (max-width: 1024px) {
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .stat-card {
   display: flex;
   align-items: center;
@@ -47,11 +59,21 @@
 }
 
 .stakeholder-grid {
+  display: grid;
   grid-template-columns: 1fr 1.2fr;
+  gap: 2rem;
+}
+
+@media (max-width: 1200px) {
+  .stakeholder-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .three-map-container {
-  height: 400px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 300px;
   background-color: var(--background);
   border-radius: 8px;
   border: 1px solid var(--border);

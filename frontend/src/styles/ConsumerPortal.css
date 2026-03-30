@@ -147,7 +147,9 @@
 }
 
 .canvas-wrapper {
-  height: 300px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 300px;
   background: radial-gradient(circle at center, #1c2128, #0a0b10);
 }
 
