@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Factory, ShieldCheck, History, Settings } from 'lucide-react';
+import { Factory, ShieldCheck, History, Settings, ExternalLink } from 'lucide-react';
 import '../styles/Layout.css';
 
 const Sidebar = () => {
@@ -25,6 +25,11 @@ const Sidebar = () => {
         <NavLink to="/audit" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
           <History size={20} />
           <span>Audit Log</span>
+        </NavLink>
+
+        <NavLink to="/verify" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
+          <ExternalLink size={20} />
+          <span>Consumer Portal</span>
         </NavLink>
 
         <div className="nav-divider"></div>
