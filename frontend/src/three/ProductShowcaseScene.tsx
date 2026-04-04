@@ -1,49 +1,66 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { MeshDistortMaterial, Float, ContactShadows, Environment } from '@react-three/drei';
+import { Float, MeshTransmissionMaterial, Octahedron, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
-export const ProductShowcaseScene = ({ color = '#00d2ff', active = true }) => {
+export const ProductShowcaseScene = ({ color = '#00d2ff' }) => {
   const meshRef = useRef<THREE.Mesh>(null!);
 
   useFrame((state) => {
-    if (!active) return;
     const t = state.clock.getElapsedTime();
-    meshRef.current.rotation.y = t * 0.4;
-    meshRef.current.position.y = Math.sin(t * 1.5) * 0.1;
+    meshRef.current.rotation.x = t * 0.15;
+    meshRef.current.rotation.y = t * 0.25;
   });
 
   return (
     <>
-      <ambientLight intensity={0.4} />
-      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} color={color} />
-      <pointLight position={[-10, -10, -10]} color="#ffffff" intensity={1} />
-      
-      <Environment preset="city" />
+      <ambientLight intensity={0.1} />
+      <spotLight position={[5, 5, 5]} angle={0.15} penumbra={1} intensity={2} color={color} />
+      <pointLight position={[-5, -5, -5]} intensity={1} color="#aa3bff" />
 
-      <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1}>
-        <mesh ref={meshRef}>
-          <icosahedronGeometry args={[1, 15]} />
-          <MeshDistortMaterial
+      <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+        <Octahedron ref={meshRef} args={[1, 0]}>
+          <MeshTransmissionMaterial
+            backside
+            samples={16}
+            thickness={1}
+            chromaticAberration={0.05}
+            anisotropy={0.1}
+            distortion={0.2}
+            distortionScale={0.5}
+            temporalDistortion={0.5}
+            clearcoat={1}
             color={color}
-            speed={3}
-            distort={0.1}
-            radius={1}
-            metalness={0.9}
-            roughness={0.1}
-            emissive={color}
-            emissiveIntensity={0.2}
           />
-        </mesh>
+        </Octahedron>
+        
+        {/* Inner Core */}
+        <Octahedron args={[0.3, 0]}>
+           <MeshDistortMaterial
+            color={color}
+            speed={5}
+            distort={0.5}
+            emissive={color}
+            emissiveIntensity={3}
+          />
+        </Octahedron>
+
+        {/* Outer Glow Halo */}
+        <Octahedron args={[1.5, 0]}>
+          <meshBasicMaterial
+            color={color}
+            wireframe
+            transparent
+            opacity={0.03}
+          />
+        </Octahedron>
       </Float>
 
-      <ContactShadows
-        position={[0, -1.5, 0]}
-        opacity={0.4}
-        scale={10}
-        blur={2}
-        far={4.5}
-      />
+      {/* Ground Reflection Glow */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
+        <planeGeometry args={[10, 10]} />
+        <meshBasicMaterial color={color} transparent opacity={0.02} />
+      </mesh>
     </>
   );
 };

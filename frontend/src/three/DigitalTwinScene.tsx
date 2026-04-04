@@ -1,59 +1,84 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, Box } from '@react-three/drei';
+import { Float, MeshTransmissionMaterial, MeshDistortMaterial, Sphere, Torus } from '@react-three/drei';
 import * as THREE from 'three';
 
 export const DigitalTwinScene = ({ color = '#00d2ff' }) => {
-  const boxRef = useRef<THREE.Mesh>(null!);
-  const wireframeRef = useRef<THREE.Mesh>(null!);
+  const meshRef = useRef<THREE.Mesh>(null!);
+  const ringRef = useRef<THREE.Mesh>(null!);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    boxRef.current.rotation.x = t * 0.2;
-    boxRef.current.rotation.y = t * 0.3;
-    wireframeRef.current.rotation.x = t * 0.2;
-    wireframeRef.current.rotation.y = t * 0.3;
+    meshRef.current.rotation.x = t * 0.2;
+    meshRef.current.rotation.y = t * 0.3;
+    ringRef.current.rotation.z = t * 0.5;
     
-    // Slight pulsing
-    const scale = 1 + Math.sin(t * 2) * 0.05;
-    boxRef.current.scale.set(scale, scale, scale);
-    wireframeRef.current.scale.set(scale + 0.1, scale + 0.1, scale + 0.1);
+    const scale = 1 + Math.sin(t * 1.5) * 0.05;
+    meshRef.current.scale.set(scale, scale, scale);
   });
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
-      <spotLight position={[-10, 10, -10]} angle={0.15} penumbra={1} intensity={1} />
+      <ambientLight intensity={0.2} />
+      <pointLight position={[10, 10, 10]} intensity={2} color={color} />
+      <spotLight position={[-10, 10, -10]} angle={0.15} penumbra={1} intensity={2} />
       
-      <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-        <Box ref={boxRef} args={[1, 1, 1]}>
+      <Float speed={3} rotationIntensity={1.5} floatIntensity={2}>
+        {/* Core "Quantum" Sphere */}
+        <Sphere ref={meshRef} args={[1, 64, 64]}>
+          <MeshTransmissionMaterial
+            backside
+            samples={16}
+            thickness={0.5}
+            chromaticAberration={0.06}
+            anisotropy={0.1}
+            distortion={0.1}
+            distortionScale={0.3}
+            temporalDistortion={0.5}
+            clearcoat={1}
+            attenuationDistance={0.5}
+            attenuationColor={color}
+            color={color}
+          />
+        </Sphere>
+        
+        {/* Inner Pulsing Core */}
+        <Sphere args={[0.4, 32, 32]}>
           <MeshDistortMaterial
             color={color}
-            speed={2}
-            distort={0.2}
+            speed={4}
+            distort={0.4}
             radius={1}
             emissive={color}
-            emissiveIntensity={0.5}
-            transparent
-            opacity={0.8}
+            emissiveIntensity={2}
           />
-        </Box>
-        
-        <Box ref={wireframeRef} args={[1, 1, 1]}>
+        </Sphere>
+
+        {/* Orbiting Ring */}
+        <Torus ref={ringRef} args={[1.5, 0.02, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshBasicMaterial color={color} transparent opacity={0.5} />
+        </Torus>
+
+        {/* Outer Wireframe Hull */}
+        <Sphere args={[1.6, 16, 16]}>
           <meshBasicMaterial
             color={color}
             wireframe
             transparent
-            opacity={0.3}
+            opacity={0.05}
           />
-        </Box>
+        </Sphere>
       </Float>
 
-      {/* Background Particles/Nodes */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[2, 2.1, 64]} />
-        <meshBasicMaterial color={color} transparent opacity={0.1} />
+      {/* Volumetric Atmosphere */}
+      <mesh scale={10}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshBasicMaterial
+          color={color}
+          transparent
+          opacity={0.02}
+          side={THREE.BackSide}
+        />
       </mesh>
     </>
   );
